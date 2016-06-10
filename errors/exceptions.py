@@ -27,3 +27,27 @@ class MatchError(EnTKError):
 			str(par2)
 			)
 		super(MatchError, self).__init__ (msg)
+
+class ArgumentError(EnsemblemdError):
+	"""A BadArgumentError is thrown if a wrong set of arguments were passed 
+	to a kernel.
+	"""
+	def __init__ (self, kernel_name, message, valid_arguments_set):
+		msg = "Invalid argument(s) for kernel '{0}': {1}. Valid arguments are {2}.".format(
+			kernel_name,
+			message,
+			valid_arguments_set
+			)
+		super(ArgumentError, self).__init__ (msg)
+
+
+class NotImplementedError(EnsemblemdError):
+	"""NotImplementedError is thrown if a class method or function is not 
+	implemented."""
+
+	def __init__ (self, method_name, class_name):
+		msg = "Method {0}() missing implementation in {1}.".format(
+			method_name, 
+			class_name
+			)
+		super(NotImplementedError, self).__init__ (msg)
