@@ -9,7 +9,7 @@ __license__   = "MIT"
 
 from copy import deepcopy
 
-from errors.exceptions import *
+from radical.patterns.errors.exceptions import *
 
 # ------------------------------------------------------------------------------ --------------------------------------------------------
 # Kernel format
@@ -58,7 +58,6 @@ class KernelBase(object):
 		
 		# No use-case but can be supported
 		#self._post_exec              = None
-
 		self._executable             = None
 		self._arguments              = None
 		self._uses_mpi               = None
@@ -66,23 +65,10 @@ class KernelBase(object):
 		# If unspecified, number of cores is set to 1
 		self._cores                  = 1
 
-
-		'''
-		self._upload_input_data      = None
-		
-		self._link_input_data        = None
-
-		self._download_input_data    = None
-		self._download_output_data   = None
-
-		self._copy_input_data        = None
-		self._copy_output_data       = None
-		'''
-
 	# --------------------------------------------------------------------------
 	#
 	def as_dict(self):
-	"""Returns a dictionary representation of the kernel"""
+		"""Returns a dictionary representation of the kernel"""
 	
 		kernel_dict = {	"pre_exec": self._pre_exec,
 			 	"environment": self._environment,
@@ -93,34 +79,26 @@ class KernelBase(object):
 			 	}
 		return kernel_dict
 
-	# --------------------------------------------------------------------------
-	#
-	def __str__(self):
-		return str(self.as_dict())
 
 	# --------------------------------------------------------------------------
 	#
-	def register(self) :
-		""" Kernel registration function. The engine calls this during startup
-			to retrieve the adaptor information.
-		"""
-		return self._info
-
-	# --------------------------------------------------------------------------
-	#
-	@staticmethod
+	@property
+	def name(self):
+		return self._kernel_name
+	
 	def get_name():
 		return self._name
 
 	# --------------------------------------------------------------------------
 	#
-	def get_info (self) :
-		return self._info
 
-	# --------------------------------------------------------------------------
-	#
-	def get_logger(self):
-		return self._logger
+	@property
+	def kernel_info(self):
+		return self._kernel_info
+	
+	def get_kernel_info (self) :
+		return self._kernel_info
+
 
 	# --------------------------------------------------------------------------
 	#

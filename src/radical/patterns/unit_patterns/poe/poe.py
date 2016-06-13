@@ -2,9 +2,10 @@ __author__    = "Vivek Balasubramanian <vivek.balasubramanian@rutgers.edu>"
 __copyright__ = "Copyright 2016, http://radical.rutgers.edu"
 __license__   = "MIT"
 
-from errors.exceptions import *
+from radical.patterns.errors.exceptions import *
+from radical.patterns.execution_pattern import ExecutionPattern
 
-class Ensemble():
+class PoE(ExecutionPattern):
 
 	def __init__(self, tasks, object_list):
 

@@ -7,7 +7,7 @@ __author__    = "Vivek Balasubramanian <vivek.balasubramaninan@rutgers.edu>"
 __copyright__ = "Copyright 2016, http://radical.rutgers.edu"
 __license__   = "MIT"
 
-from errors.exception import *
+from radical.patterns.errors.exceptions import *
 
 # ------------------------------------------------------------------------------
 #
@@ -23,11 +23,12 @@ class Kernel(object):
 				expected_type=str,
 				actual_type=type(name))
 
-		self._engine = Engine()
-		self._kernel = self._engine.get_kernel_plugin(name)
+		self._name = name
+		#self._engine = Engine()
+		#self._kernel = self._engine.get_kernel_plugin(name)
 
-		if args is not None:
-			self.set_args(args)			
+		#if args is not None:
+		#	self.set_args(args)			
 
 	
 	#---------------------------------------------------------------------------
@@ -56,7 +57,8 @@ class Kernel(object):
 
 	@property
 	def name(self):
-		return self._kernel.get_name()
+		#return self._kernel.get_name()
+		return self._name
 	#---------------------------------------------------------------------------
 
 	@property
