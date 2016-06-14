@@ -9,13 +9,13 @@ __license__   = "MIT"
 
 from copy import deepcopy
 
-from radical.patterns.errors.exceptions import NoKernelConfigurationError
-from radical.patterns.kernel_plugins.kernel_base import KernelBase
+from radical.patterns import NoKernelConfigurationError
+from radical.patterns import KernelBase
 
 # ------------------------------------------------------------------------------
 # 
 _KERNEL_INFO = {
-			"name":         "misc.hello",
+			"name":         "hello",
 			"description":  "Writes Hello World to a file",
 			"arguments":   {"--file=":     
 						{

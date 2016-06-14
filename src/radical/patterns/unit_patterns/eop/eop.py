@@ -7,9 +7,10 @@ from radical.patterns.execution_pattern import ExecutionPattern
 
 class EoP(ExecutionPattern):
 
-	def __init__(self, stages, type='unit', object_list=None, iteration = False):
+	def __init__(self, stages, instances, type='unit', object_list=None, iteration = False):
 
 		self._stages = stages
+		self._instances = instances
 		self._type = type
 		self._object_list = object_list
 		self._iteration = iteration
@@ -23,6 +24,9 @@ class EoP(ExecutionPattern):
 		# Check type errors
 		if type(self._stages) != int:
 			raise TypeError(expected_type=int, actual_type=type(self._stages))
+
+		if type(self._instances) != int:
+			raise TypeError(expected_type=int, actual_type=type(self._instances))
 
 		if type(self._type) != str:
 			raise TypeError(expected_type=str, actual_type=type(self._type))		
@@ -49,7 +53,11 @@ class EoP(ExecutionPattern):
 	@property
 	def stages(self):
 		return self._stages
-	
+
+	@property
+	def instances(self):
+		return self._instances
+
 	@property
 	def object_list(self):
 		return self._object_list

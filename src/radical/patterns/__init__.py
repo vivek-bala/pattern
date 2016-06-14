@@ -1,5 +1,5 @@
 # Errors and exceptions
-#from radical.patterns.errors.exceptions import *
+from radical.patterns.errors.exceptions import *
 
 # Execution patterns
 from radical.patterns.unit_patterns.eop.eop import EoP

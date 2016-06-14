@@ -8,12 +8,20 @@ from radical.patterns import Kernel
 
 from hello import hello_kernel
 
+class Test(EoP):
+
+	def __init__(self,stages, instances):
+		EoP.__init__(self, stages, instances)
+
+	def stage_1(self, instance):
+		k1 = Kernel(name="hello")
+
+
+
 if __name__ == '__main__':
 
-	pipe = EoP(stages=3)
+	pipe = Test(stages=1, instances=16)
 	#ensemble = Ensemble(tasks=2, object_list=[pipe])
-
-	k1 = Kernel(name="test")
 
 	app = AppManager(name='firstapp')
 	#print app.name
