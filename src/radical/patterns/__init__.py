@@ -9,5 +9,4 @@ from radical.patterns.unit_patterns.poe.poe import PoE
 from radical.patterns.appman.app_manager import AppManager
 
 # Kernel
-from radical.patterns.kernel_plugins.kernel import Kernel
-from radical.patterns.kernel_plugins.kernel_base import KernelBase
+from radical.patterns.kernel_plugins.kernel_base import Kernel

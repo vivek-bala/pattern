@@ -39,7 +39,15 @@ class ValueError(EnTKError):
 
 		super(ValueError, self).__init__ (msg)
 
+class ExistsError(EnTKError):
+	"""TypeError is thrown if a parameter of a wrong type is passed to a method or function."""
 
+	def __init__ (self, item, parent):
+		msg = "Object {0} already exists in {1} .".format(
+			str(item), 
+			str(parent)
+			)
+		super(ExistsError, self).__init__ (msg)
 
 class MatchError(EnTKError):
 	"""MatchError is thrown if two parameters are not equal."""

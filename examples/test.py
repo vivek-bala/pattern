@@ -11,10 +11,12 @@ from hello import hello_kernel
 class Test(EoP):
 
 	def __init__(self,stages, instances):
-		EoP.__init__(self, stages, instances)
+		super(Test,self).__init__(stages,instances)
 
 	def stage_1(self, instance):
 		k1 = Kernel(name="hello")
+
+		return k1
 
 
 
@@ -25,9 +27,10 @@ if __name__ == '__main__':
 
 	app = AppManager(name='firstapp')
 	#print app.name
-	app.register_kernels(k1)
-	app.register_kernels(k1)
+
+	app.register_kernels(hello_kernel)
 	kerns = app.get_kernels()
 
-	print kerns
+	app.run(pipe)
+	#print kerns
 	#print app
