@@ -7,10 +7,12 @@ from radical.patterns.execution_pattern import ExecutionPattern
 
 class PoE(ExecutionPattern):
 
-	def __init__(self, tasks, object_list):
+	def __init__(self, ensemble_size, pipeline_size, type='unit', iteration = False):
 
-		self._tasks = tasks
-		self._object_list = object_list
+		self._ensemble_size = ensemble_size
+		self._pipeline_size = pipeline_size
+		self._type = type
+		self._iteration = iteration
 
 		# Perform sanity check -- perform before proceeding
 		self.sanity_check()
@@ -18,21 +20,39 @@ class PoE(ExecutionPattern):
 
 	def sanity_check(self):
 
-		# Check value type for stages
-		if type(self._tasks) != int:
-			raise TypeError(expected_type=int, actual_type=type(self._tasks))
+		# Check type errors
+		if type(self._pipeline_size) != int:
+			raise TypeError(expected_type=int, actual_type=type(self._ensemble_size))
 
-		if type(self._object_list) != list:
-			raise TypeError(expected_type=list, actual_type=type(self._object_list))
+		if type(self._ensemble_size) != int:
+			raise TypeError(expected_type=int, actual_type=type(self._pipeline_size))
+		elif ((type(self._ensemble_size) != list) and (type(self._ensemble_size) != int)):
+			raise TypeError(expected_type=list, actual_type=type(self._pipeline_size))
 
-		# Test if number of stages == length of object_list
-		if ((self.tasks != len(self._object_list)) and (len(self._object_list)!=1)):
-			raise MatchError(par1="tasks", par2="number of objects")
+		if type(self._type) != str:
+			raise TypeError(expected_type=str, actual_type=type(self._type))		
+
+		if type(self._iteration) != bool:
+			raise TypeError(expected_type=bool, actual_type=type(self._iteration))
+
+
+		# Check value errors
+		if ((self._type != 'unit') and (self._type != 'complex')):
+			raise ValueError(expected_value=['unit','complex'], actual_value=self._type)
 
 	@property
-	def tasks(self):
-		return self._tasks
+	def ensemble_size(self):
+		return self._ensemble_size
 	
 	@property
-	def object_list(self):
-		return self._object_list
+	def pipeline_size(self):
+		return self._pipeline_size
+
+	@property
+	def iteration(self):
+		return self._iteration
+	
+	@property
+	def type(self):
+		return self._type
+	

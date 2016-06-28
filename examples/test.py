@@ -10,19 +10,46 @@ from hello import hello_kernel
 
 class Test(EoP):
 
-	def __init__(self,stages, instances):
-		super(Test,self).__init__(stages,instances)
+	def __init__(self, ensemble_size, pipeline_size):
+		super(Test,self).__init__(ensemble_size, pipeline_size)
 
 	def stage_1(self, instance):
 		k1 = Kernel(name="hello")
 
 		return k1
 
+	def branch_1(self):
+
+		if (stage_1['instace_1'].status == 'Failed'):
+			self.next_stage = 3
+		elif (stage_1['instance_1'].output > 1):
+			# Do something
+		else:
+			pass
+		
+
+	def stage_2(self,instance):
+
+		k2 = Kernel(name='new')
+		return k2
+
+	'''
+	def branch_2(self):
+		# Do something
+
+	'''
+
+	def stage_3(self,instance):
+
+		k3 = Kernel(name="world")
+
+		return k3
+
 
 
 if __name__ == '__main__':
 
-	pipe = Test(stages=1, instances=16)
+	pipe = Test(ensemble_size=16, pipeline_size=1)
 	#ensemble = Ensemble(tasks=2, object_list=[pipe])
 
 	app = AppManager(name='firstapp')

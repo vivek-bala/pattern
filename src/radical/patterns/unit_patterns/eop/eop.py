@@ -7,12 +7,11 @@ from radical.patterns.execution_pattern import ExecutionPattern
 
 class EoP(ExecutionPattern):
 
-	def __init__(self, stages, instances, type='unit', object_list=None, iteration = False):
+	def __init__(self, ensemble_size, pipeline_size, type='unit', iteration = False):
 
-		self._stages = stages
-		self._instances = instances
+		self._ensemble_size = ensemble_size
+		self._pipeline_size = pipeline_size
 		self._type = type
-		self._object_list = object_list
 		self._iteration = iteration
 
 		# Perform sanity check -- perform before proceeding
@@ -22,17 +21,16 @@ class EoP(ExecutionPattern):
 	def sanity_check(self):
 
 		# Check type errors
-		if type(self._stages) != int:
-			raise TypeError(expected_type=int, actual_type=type(self._stages))
+		if type(self._ensemble_size) != int:
+			raise TypeError(expected_type=int, actual_type=type(self._ensemble_size))
 
-		if type(self._instances) != int:
-			raise TypeError(expected_type=int, actual_type=type(self._instances))
+		if type(self._pipeline_size) != int:
+			raise TypeError(expected_type=int, actual_type=type(self._pipeline_size))
+		elif ((type(self._pipeline_size) != list) and (type(self._pipeline_size) != int)):
+			raise TypeError(expected_type=list, actual_type=type(self._pipeline_size))
 
 		if type(self._type) != str:
 			raise TypeError(expected_type=str, actual_type=type(self._type))		
-
-		if ((type(self._object_list) != list) and (self._object_list != None)):
-			raise TypeError(expected_type=list, actual_type=type(self._object_list))
 
 		if type(self._iteration) != bool:
 			raise TypeError(expected_type=bool, actual_type=type(self._iteration))
@@ -44,23 +42,14 @@ class EoP(ExecutionPattern):
 
 		# Check match errors
 
-		## Test if number of stages == length of object_list
-		if ((self._type != 'unit') and (self.stages != len(self.object_list))):
-			raise MatchError(par1="stages", par2="number of objects")
-
-
 
 	@property
-	def stages(self):
-		return self._stages
-
+	def ensemble_size(self):
+		return self._ensemble_size
+	
 	@property
-	def instances(self):
-		return self._instances
-
-	@property
-	def object_list(self):
-		return self._object_list
+	def pipeline_size(self):
+		return self._pipeline_size
 
 	@property
 	def iteration(self):

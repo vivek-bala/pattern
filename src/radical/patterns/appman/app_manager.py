@@ -85,6 +85,12 @@ class AppManager():
 		self._pattern = pattern
 		self.sanity_pattern_check()
 
+		# Convert pattern to JSON
+		self.pattern_to_json(pattern)
+
+	def pattern_to_json(self, pattern):
+		pass
+
 	def run(self, pattern):
 
 		print pattern.__class__.__base__
