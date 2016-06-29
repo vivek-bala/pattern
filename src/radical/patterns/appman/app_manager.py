@@ -6,6 +6,7 @@ from radical.patterns.errors.exceptions import *
 from radical.patterns.kernel_plugins.kernel_base import Kernel
 from radical.patterns.appman.plugin_registry import default_plugins
 from radical.patterns.execution_pattern import ExecutionPattern
+import pprint
 
 class AppManager():
 
@@ -22,6 +23,8 @@ class AppManager():
 
 		# Load default exec plugins
 		self.load_plugins()
+
+		self._kernel_dict = dict()
 
 	def sanity_pattern_check(self):
 		if self._pattern.__class__.__base__.__base__ != ExecutionPattern:
@@ -94,3 +97,29 @@ class AppManager():
 	def run(self, pattern):
 
 		print pattern.__class__.__base__
+
+		self._pattern = pattern
+
+		# Create dictionary for logging
+		self.create_record()
+
+
+	def create_record(self):
+
+		for iter in range(1, self._pattern.iteration+1):
+			self._kernel_dict["iter_{0}".format(iter)] = dict()
+
+			for stage in range(1, self._pattern.pipeline_size+1):
+				self._kernel_dict["iter_{0}".format(iter)]["stage_{0}".format(stage)]  = dict()
+				self._kernel_dict["iter_{0}".format(iter)]["stage_{0}".format(stage)]['status'] = None
+
+				if type(self._pattern.ensemble_size) == int:
+					instances = self._pattern.ensemble_size
+				elif type(self._pattern.ensemble_size) == list:
+					instances = self._pattern.ensemble_size[stage-1]
+
+				for inst in range(1, instances+1):
+					self._kernel_dict["iter_{0}".format(iter)]["stage_{0}".format(stage)]["instance_{0}".format(inst)] = None
+
+		# Print empty dict to check structure					
+		pprint.pprint(self._kernel_dict)

@@ -7,12 +7,18 @@ from radical.patterns.execution_pattern import ExecutionPattern
 
 class PoE(ExecutionPattern):
 
-	def __init__(self, ensemble_size, pipeline_size, type='unit', iteration = False):
+	def __init__(self, ensemble_size, pipeline_size, iteration = 1, type='unit', iterative = False):
 
 		self._ensemble_size = ensemble_size
 		self._pipeline_size = pipeline_size
 		self._type = type
 		self._iteration = iteration
+		self._iterative = iterative
+
+		# Internal parameters
+		self.next_stage = 1
+		self.iteration = 1
+		self.kill_instances = None
 
 		# Perform sanity check -- perform before proceeding
 		self.sanity_check()
@@ -32,8 +38,11 @@ class PoE(ExecutionPattern):
 		if type(self._type) != str:
 			raise TypeError(expected_type=str, actual_type=type(self._type))		
 
-		if type(self._iteration) != bool:
-			raise TypeError(expected_type=bool, actual_type=type(self._iteration))
+		if type(self._iteration) != int:
+			raise TypeError(expected_type=int, actual_type=type(self._iteration))
+
+		if type(self._iterative) != bool:
+			raise TypeError(expected_type=bool, actual_type=type(self._iterative))
 
 
 		# Check value errors

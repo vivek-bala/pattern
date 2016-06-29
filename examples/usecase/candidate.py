@@ -2,6 +2,17 @@ from radical.patterns import PoE
 from radical.patterns import AppManager
 from radical.patterns import Kernel
 
+###################################
+
+# Pipeline of Ensembles
+
+# s1 -  s1 - s1 - s1 - s1 - s1
+#                 |
+#                s2
+#                 |
+#     s3 - s3 - s3 - s3
+
+
 class Workflow(PoE):
 
 	def stage_1(self, instance):
