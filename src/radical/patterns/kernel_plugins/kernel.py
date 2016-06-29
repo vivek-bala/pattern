@@ -1,65 +1,20 @@
-#!/usr/bin/env python
-
-"""Defines and implements the abstract kernel base class.
-"""
-
 __author__    = "Vivek Balasubramanian <vivek.balasubramanian@rutgers.edu>"
 __copyright__ = "Copyright 2016, http://radical.rutgers.edu"
 __license__   = "MIT"
 
-from copy import deepcopy
+class Kernel(object):
 
-from radical.patterns.errors.exceptions import *
-import gc
+	def __init__(self, name=None):
 
-# ------------------------------------------------------------------------------ --------------------------------------------------------
-# Kernel format
-"""
-_KERNEL_INFO = {
-	"name":         "kernel name",
-	"description":  "Description about kernel",
-	"arguments":   {
-				"--arg1=":
-				{
-					"mandatory": False,
-					"description": "argument description"
-				}
-			},
-	"machine_configs": 
-			{
-				"resource_name": {
-					"pre_exec"      : [],
-					"executable"    : "",
-					"uses_mpi"      : False
-				},
-			}
-	}
-"""
-#  ------------------------------------------------------------- ------------------------------------------------------------------------------
-
-#  ------------------------------------------------------------- ------------------------------------------------------------------------------
-# plugin base class
-#
-class KernelBase(object):
-
-	#  ------------------------------------------------------------- ------------------------------------------------------------------------------
-	
-	def __init__ (self, kernel_info) :
-
-		self._kernel_info     = kernel_info
-		self._kernel_name     = kernel_info['name']
-
-		if 'description' in kernel_info:
-			self._kernel_description  = kernel_info['description']
-
-		self._args     = []
-		self._raw_args = []
+		self._name = name
 
 		# Parameters required for any Kernel irrespective of RP
 		self._pre_exec               	= None
 		self._executable 	= None
 		self._arguments       	= None
 		self._uses_mpi               = None
+		#self._input_staging 	= None
+		#self._output_staging 	= None
 		self._cores                  	= 1 # If unspecified, number of cores is set to 1
 
 		self._upload_input_data      	= None
@@ -68,57 +23,39 @@ class KernelBase(object):
 		self._download_output_data   	= None
 		self._copy_input_data        	= None
 		self._copy_output_data       	= None
+
+
 	#  ------------------------------------------------------------- ------------------------------------------------------------------------------
 	
 	def as_dict(self):
 		"""Returns a dictionary representation of the kernel"""
 	
-		kernel_dict = {	"name": 	self._kernel_name,
-				"pre_exec": 	self._pre_exec,
+		kernel_dict = {	"pre_exec": 	self._pre_exec,
 			 	"executable": 	self._executable,
 			 	"arguments": 	self._arguments,
 			 	"uses_mpi": 	self._uses_mpi,
+			 	"input_data":	self._input_staging,
+			 	"output_data":  self._output_staging,
 			 	"cores": 	self._cores
 			 	}
 
 		return kernel_dict
+
+
 	# ------------------------------------------------------------- ------------------------------------------------------------------------------
-	
 	@property
 	def name(self):
-		return self._kernel_name
+		return self._name
 	
 	def get_name():
 		return self._name
-	# ------------------------------------------------------------- ------------------------------------------------------------------------------
 
-	@property
-	def kernel_info(self):
-		return self._kernel_info
-	
-	def get_kernel_info (self) :
-		return self._kernel_info
-	# ------------------------------------------------------------- ------------------------------------------------------------------------------
-	
-	def get_arg(self, arg_name):
-		"""Returns the value of the argument given by 'arg_name'.
-		"""
-		return self._args[arg_name]["_value"]
-	# ------------------------------------------------------------- ------------------------------------------------------------------------------
-	
-	def get_raw_args(self):
-		"""Returns all arguments as they were passed to the kernel.
-		"""
-		return self._raw_args
 
-	def _bind_to_resource(self, resource_key, pattern_name=None):
-		"""Binds the kernel to a specific resource.
-		"""
-		raise NotImplementedError(
-		  method_name="_get_kernel_description",
-		  class_name=type(self))
 	# ------------------------------------------------------------- ------------------------------------------------------------------------------
+	# Methods to get via API
 
+	
+	# ------------------------------------------------------------- ------------------------------------------------------------------------------
 	# ------------------------------------------------------------- ------------------------------------------------------------------------------
 	# Methods to set kernel parameters via API
 

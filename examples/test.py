@@ -10,43 +10,31 @@ from hello import hello_kernel
 
 class Test(PoE):
 
-	def __init__(self, ensemble_size, pipeline_size, iteration):
-		super(Test,self).__init__(ensemble_size, pipeline_size, iteration)
+	def __init__(self, ensemble_size, pipeline_size, iterations):
+		super(Test,self).__init__(ensemble_size, pipeline_size, iterations)
 
 	def stage_1(self, instance):
-		k1 = Kernel(name="hello")
-
+		k1 = Kernel(name="hello_module")
+		k1.cores = 3
 		return k1
 
-	'''
+
 	def branch_1(self):
-
-		if (stage_1['instace_1'].status == 'Failed'):
-			self.next_stage = 3
-		elif (stage_1['instance_1'].output > 1):
-			# Do something
-		else:
-			pass
+		print self.cur_iteration
 		
-
-	def stage_2(self,instance):
-
-		k2 = Kernel(name='new')
-		return k2
-
-	'''
+	
 
 
 if __name__ == '__main__':
 
-	pipe = Test(ensemble_size=16, pipeline_size=1, iteration=1)
+	pipe = Test(ensemble_size=16, pipeline_size=1, iterations=2)
 	#ensemble = Ensemble(tasks=2, object_list=[pipe])
 
 	app = AppManager(name='firstapp')
 	#print app.name
 
 	app.register_kernels(hello_kernel)
-	kerns = app.get_kernels()
+	kerns = app.list_kernels()
 
 	app.run(pipe)
 	#print kerns

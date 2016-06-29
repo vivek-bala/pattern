@@ -10,7 +10,7 @@ __license__   = "MIT"
 from copy import deepcopy
 
 from radical.patterns import NoKernelConfigurationError
-from radical.patterns import Kernel
+from radical.patterns import KernelBase
 
 # ------------------------------------------------------------------------------
 # 
@@ -37,7 +37,7 @@ _KERNEL_INFO = {
 
 # ------------------------------------------------------------------------------
 # 
-class hello_kernel(Kernel):
+class hello_kernel(KernelBase):
 
 	# --------------------------------------------------------------------------
 	#
